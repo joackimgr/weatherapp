@@ -3,11 +3,22 @@ function loadWeather(data) {
     const content = document.getElementById('content');
 
     const oldWeather = document.querySelector('.todayWeatherCont');
-    if (oldWeather) oldWeather.remove();
+    const oldForecast = document.querySelector('.nextForecastContainer');
 
-    const today = loadToday(data.days[0], data.resolvedAddress);
+    if (oldWeather) {
+        oldWeather.remove();
+    }
 
-    content.append(today);
+    if (oldForecast) {
+        oldForecast.remove();
+    }
+    
+    setTimeout(() => {
+        const today = loadToday(data.days[0], data.resolvedAddress);
+        const forecast = loadForecast(data);
+        content.append(today, forecast);
+    }, 100);
+    
 }
 
 function loadToday(today, location) {
@@ -34,6 +45,26 @@ function loadToday(today, location) {
     weatherDiv.append(weather, icon);
     container.append(city, weatherDiv);
 
+    return container;
+}
+
+function loadForecast(data) {
+    const container = document.createElement('div');
+    container.className = 'nextForecastContainer';
+    for (let i = 1; i < 5; i++) {
+        let date = document.createElement('h2');
+        const dateObj = new Date(data.days[i].datetime);
+        date.textContent = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+        let icon = document.createElement('img');
+        icon.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/SVG/2nd%20Set%20-%20Color/${data.days[i].icon}.svg`;
+        icon.alt = `${data.days[i].icon}`;
+        let temp = document.createElement('p');
+        temp.textContent = `${data.days[i].temp}° C`;
+        const div = document.createElement('div');
+        div.className = 'nextForecast';
+        div.append(date, icon, temp);
+        container.appendChild(div);
+    }
     return container;
 }
 

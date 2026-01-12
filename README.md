@@ -29,7 +29,7 @@ A modern, dynamic weather application built with **Vanilla JavaScript** and **We
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/joackimgr/weatherapp.git](https://github.com/joackimgr/weatherapp.git)
+   git clone https://github.com/joackimgr/weatherapp.git
 
 2. **Navigate to the directory:**
    ```bash
